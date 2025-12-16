@@ -382,7 +382,22 @@
     <div class="sticker s-cd"></div>
 
     <div class="desktop">
+<div class="desktop-icon" onclick="window.location.href='music.html'" 
+     style="position: absolute; top: 30px; left: 30px; display: flex; flex-direction: column; align-items: center; cursor: pointer; z-index: 50; transition: transform 0.2s;">
+    
+    <div style="width: 60px; height: 60px; background: white; border: 3px solid black; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 4px 4px 0 black; border-radius: 5px;">
+        💿
+    </div>
+    
+    <div style="background: var(--nj-blue); color: white; padding: 2px 5px; font-family: 'VT323', monospace; margin-top: 8px; font-size: 14px; border: 2px solid black; font-weight: bold;">
+        MY_MUSIC.EXE
+    </div>
 
+    <style>
+        .desktop-icon:hover { transform: scale(1.1) rotate(-5deg); }
+        .desktop-icon:hover div:first-child { background: var(--nj-pink); }
+    </style>
+</div>
         <div class="win-profile window">
             <div class="window-header">
                 USER: CAI_WENHAO
@@ -518,3 +533,4 @@
     </script>
 </body>
 </html>
+
