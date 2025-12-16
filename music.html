@@ -277,10 +277,12 @@
     </style>
 </head>
 <body>
-<div class="icon" onclick="window.location.href='index.html'">
-    <div class="icon-img" style="background:var(--nj-pink); color:white;">🏠</div>
-    <div class="icon-label">HOME</div>
-</div>
+
+    <div class="icon" onclick="window.location.href='index.html'" style="position: absolute; right: 20px; top: 20px; z-index: 100;">
+        <div class="icon-img" style="background:var(--nj-pink); color:white;">🏠</div>
+        <div class="icon-label">HOME</div>
+    </div>
+
     <div class="desktop-icons">
         <div class="icon" onclick="switchTab('western')">
             <div class="icon-img">🌎</div>
@@ -442,11 +444,9 @@
             // 模拟简单的跑马灯效果
             display.style.animation = "none";
             display.offsetHeight; /* trigger reflow */
-            // 这里可以加上真实的 Audio 播放逻辑
         }
 
         console.log("💿 Wenhao's Music Station Ready.");
     </script>
 </body>
-
 </html>
