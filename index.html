@@ -3,247 +3,518 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>你的名字 - 个人网站</title>
+    <title>👖 WHO'S YOUR HYPE BOY? - CAI WENHAO</title>
     <style>
-        /* --- 全局样式 --- */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        h1, h2, h3 {
-            color: #111;
-        }
-        h2 {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-            margin-top: 40px;
-        }
-        section {
-            background: #fff;
-            margin: 20px 0;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        /* --- 引入复古像素字体 (如果加载失败会回退到系统字体) --- */
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@400;800&display=swap');
+
+        :root {
+            --nj-blue: #2E51FF;       /* Hype Boy MV 主色调蓝 */
+            --nj-pink: #FF66C4;       /* 糖果粉 */
+            --nj-yellow: #FFF500;     /* 荧光黄 */
+            --nj-green: #00FF94;      /* 酸性绿 */
+            --bg-grid: #E8ECF5;
+            --text-black: #1a1a1a;
+            --border-thick: 3px solid #000;
+            --shadow-hard: 6px 6px 0px #000;
         }
 
-        /* --- 导航栏 --- */
-        nav {
-            background: #333;
-            color: #fff;
-            padding: 10px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        * {
+            box-sizing: border-box;
+            user-select: none; /* 防止选中文字影响美观 */
         }
-        nav .container {
+
+        body {
+            background-color: var(--bg-grid);
+            /* 蓝色网格背景 */
+            background-image: 
+                linear-gradient(var(--nj-blue) 1px, transparent 1px),
+                linear-gradient(90deg, var(--nj-blue) 1px, transparent 1px);
+            background-size: 40px 40px;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden; /* 隐藏滚动条，模拟桌面 */
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>👆</text></svg>") 16 0, auto;
+        }
+
+        /* --- 装饰性背景漂浮物 --- */
+        .floating-bg {
+            position: absolute;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .bg-shape-1 { top: 10%; left: 5%; color: var(--nj-pink); font-size: 100px; transform: rotate(-15deg); }
+        .bg-shape-2 { bottom: 15%; right: 10%; color: var(--nj-yellow); font-size: 150px; text-shadow: 4px 4px 0 #000; }
+        .bg-shape-3 { top: 40%; left: 40%; width: 300px; height: 300px; border: 2px dashed var(--nj-blue); border-radius: 50%; opacity: 0.2; }
+
+        /* --- 桌面容器 --- */
+        .desktop {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-bottom: 60px; /* 留出底部任务栏空间 */
+        }
+
+        /* --- 通用窗口样式 --- */
+        .window {
+            background: white;
+            border: var(--border-thick);
+            position: absolute; /* 绝对定位实现自由堆叠 */
+            box-shadow: var(--shadow-hard);
+            border-radius: 10px;
+            overflow: hidden;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .window-header {
+            background: var(--nj-blue);
+            color: white;
+            padding: 8px 12px;
+            border-bottom: var(--border-thick);
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        nav .logo {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-        }
-        nav ul li {
-            margin-left: 20px;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav ul li a:hover {
-            color: #ddd;
+            text-transform: uppercase;
         }
 
-        /* --- 头部介绍 --- */
-        header.hero {
-            background: #fff;
-            padding: 60px 20px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        header.hero h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-        header.hero p {
-            font-size: 1.2em;
-            color: #555;
+        .window-controls span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border: 2px solid black;
+            border-radius: 50%;
+            margin-left: 5px;
         }
 
-        /* --- 作品集 --- */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        .window-content {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
         }
-        .portfolio-item {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+
+        /* ----------------------- 
+           窗口 1: 主页 (Profile) 
+           ----------------------- */
+        .win-profile {
+            width: 380px;
+            height: 500px;
+            top: 10%;
+            left: 15%;
+            z-index: 10;
+            transform: rotate(-2deg);
         }
-        .portfolio-item img {
+
+        .avatar-area {
             width: 100%;
             height: 200px;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid black;
+            margin-bottom: 20px;
+        }
+        
+        .avatar-area img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            opacity: 0.8;
+        }
+
+        .profile-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 2.5rem;
+            line-height: 1;
+            margin: 0;
+            color: var(--nj-blue);
+            text-shadow: 2px 2px 0px var(--nj-yellow);
+        }
+
+        .profile-role {
+            background: var(--nj-pink);
+            color: white;
+            display: inline-block;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border: 2px solid black;
+            transform: skew(-10deg);
+            margin-top: 10px;
+        }
+
+        .btn-contact {
             display: block;
-        }
-        .portfolio-item-content {
+            width: 100%;
+            margin-top: 20px;
+            background: black;
+            color: var(--nj-yellow);
+            text-align: center;
             padding: 15px;
-        }
-        .portfolio-item-content h3 {
-            margin-top: 0;
-        }
-        .portfolio-item-content a {
             text-decoration: none;
-            color: #007BFF;
+            font-weight: bold;
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            border: 2px solid transparent;
+        }
+        .btn-contact:hover {
+            background: var(--nj-blue);
+            color: white;
+            border: 2px solid black;
+        }
+
+        /* ----------------------- 
+           窗口 2: 聊天记录 (Experience) - 模仿短信界面
+           ----------------------- */
+        .win-chat {
+            width: 350px;
+            height: 450px;
+            top: 15%;
+            right: 15%;
+            z-index: 5;
+            transform: rotate(3deg);
+            border-color: var(--nj-blue);
+        }
+
+        .chat-bubble {
+            background: #eee;
+            border: 2px solid black;
+            border-radius: 15px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            position: relative;
+            width: 85%;
+        }
+
+        .chat-bubble.left {
+            background: white;
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+        }
+        
+        .chat-bubble.right {
+            background: var(--nj-green);
+            margin-left: auto;
+            border-bottom-right-radius: 0;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+        }
+
+        .chat-meta {
+            font-size: 0.7rem;
+            color: #666;
+            margin-bottom: 3px;
+            display: block;
             font-weight: bold;
         }
 
-        /* --- 博客/随想 --- */
-        .blog-post {
-            border-bottom: 1px solid #eee;
-            padding: 15px 0;
+        /* ----------------------- 
+           窗口 3: 音乐播放器 (Skills) 
+           ----------------------- */
+        .win-player {
+            width: 300px;
+            height: auto;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+            background: var(--nj-yellow);
         }
-        .blog-post:last-child {
-            border-bottom: none;
-        }
-        .blog-post h3 {
-            margin: 0;
-        }
-        .blog-post .date {
-            font-size: 0.9em;
-            color: #888;
-            margin-bottom: 5px;
-        }
-        .blog-post a {
-            text-decoration: none;
-            color: #333;
-        }
-        .blog-post a:hover h3 {
-            color: #007BFF;
+        
+        .win-player .window-header {
+            background: black;
         }
 
-        /* --- 页脚 --- */
-        footer {
+        .track-info {
+            background: white;
+            border: 2px solid black;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
             text-align: center;
-            padding: 40px 0;
-            color: #777;
-            font-size: 0.9em;
         }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .skill-pill {
+            background: var(--nj-pink);
+            color: white;
+            border: 2px solid black;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .skill-pill:hover {
+            background: var(--nj-blue);
+            transform: scale(1.1);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: white;
+            border: 2px solid black;
+            margin: 10px 0;
+            position: relative;
+        }
+        .progress-fill {
+            width: 65%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--nj-blue),
+                var(--nj-blue) 5px,
+                var(--nj-green) 5px,
+                var(--nj-green) 10px
+            );
+            animation: moveStripe 2s linear infinite;
+        }
+
+        /* --- 贴纸装饰 (Stickers) --- */
+        .sticker {
+            position: absolute;
+            z-index: 20;
+            filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+        .s-newjeans { top: 5%; right: 40%; font-size: 1.5rem; background:white; padding:5px; border:1px solid black; transform: rotate(10deg); font-weight:bold; color: var(--nj-blue); }
+        .s-bunny { bottom: 10%; right: 5%; font-size: 80px; }
+        .s-cd { top: 50%; left: 5%; width: 80px; height: 80px; background: black; border-radius: 50%; border: 3px solid white; display:flex; align-items:center; justify-content:center; animation: spin 5s linear infinite; }
+        .s-cd::after { content:''; width:20px; height:20px; background:var(--nj-pink); border-radius:50%; }
+
+        /* --- 底部任务栏 --- */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: #ddd;
+            border-top: 2px solid white;
+            box-shadow: 0 -2px 0 black;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 100;
+        }
+
+        .start-btn {
+            background: linear-gradient(to bottom, var(--nj-blue), #1a33cc);
+            color: white;
+            border: 2px solid black;
+            padding: 5px 15px;
+            font-weight: bold;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            box-shadow: inset 2px 2px 0 rgba(255,255,255,0.4);
+        }
+        .start-btn::before {
+            content: "🐰";
+            margin-right: 5px;
+        }
+
+        .marquee-container {
+            flex: 1;
+            margin: 0 20px;
+            background: black;
+            color: var(--nj-green);
+            font-family: 'VT323', monospace;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border: 2px solid #888;
+        }
+
+        /* --- 动画 Keyframes --- */
+        @keyframes popIn {
+            0% { transform: scale(0) rotate(0); opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes moveStripe {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 0; }
+        }
+
+        /* --- 移动端适配 (把乱序变垂直排列) --- */
+        @media (max-width: 800px) {
+            body { overflow-y: auto; height: auto; }
+            .desktop { display: block; padding: 20px; padding-bottom: 80px;}
+            .window { position: relative; width: 100%; top: auto !important; left: auto !important; right: auto !important; transform: none !important; margin-bottom: 20px; height: auto; }
+            .bg-shape-1, .bg-shape-2 { display: none; }
+            .s-bunny { font-size: 50px; bottom: 60px; }
+        }
+
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="container">
-            <div class="logo">淡淡的Damn</div>
-            <ul>
-                <li><a href="#about">关于我</a></li>
-                <li><a href="#portfolio">作品集</a></li>
-                <li><a href="#blog">文章</a></li>
-            </ul>
+    <div class="floating-bg bg-shape-1">★</div>
+    <div class="floating-bg bg-shape-2">☺</div>
+    <div class="floating-bg bg-shape-3"></div>
+
+    <div class="sticker s-newjeans">#ATTENTION</div>
+    <div class="sticker s-bunny">🐰</div>
+    <div class="sticker s-cd"></div>
+
+    <div class="desktop">
+
+        <div class="win-profile window">
+            <div class="window-header">
+                USER: CAI_WENHAO
+                <div class="window-controls"><span></span><span></span></div>
+            </div>
+            <div class="window-content" style="text-align:center;">
+                <div class="avatar-area">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:var(--nj-blue); color:white; font-size:3rem;">
+                        (OvO)
+                    </div>
+                </div>
+                <h1 class="profile-name">CAI WENHAO</h1>
+                <h1 class="profile-name" style="-webkit-text-stroke: 1px black; color: white;">蔡文昊</h1>
+                <div class="profile-role">CREATIVE DEVELOPER</div>
+                <div class="profile-role" style="background:var(--nj-yellow); color:black;">UI DESIGNER</div>
+
+                <p style="font-family:'VT323'; font-size:1.1rem; margin-top:20px;">
+                    "You know I hype you boy." <br>
+                    我是一个追求极致视觉体验的开发者。<br>
+                    让代码像 MV 一样流畅。
+                </p>
+
+                <a href="#" class="btn-contact">SEND MESSAGE -></a>
+            </div>
         </div>
-    </nav>
 
-    <header class="hero">
-        <h1>Damn，我是蔡文昊</h1>
-        <p>我与我周旋久，宁做我。</p>
-    </header>
-
-    <div class="container">
-
-        <section id="about">
-            <h2>关于我</h2>
-            <p>
-                你将了解到一个完全不同的我。
-            </p>
-            <p>
-                一个无法理解，有些偏执的我。
-            </p>
-        </section>
-
-        <section id="portfolio">
-            <h2>作品集</h2>
-            <div class="portfolio-grid">
+        <div class="win-chat window">
+            <div class="window-header" style="background:var(--nj-pink);">
+                MESSAGES (2)
+                <div class="window-controls"><span></span><span></span></div>
+            </div>
+            <div class="window-content" style="background:#f9f9f9;">
                 
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/300x200?text=项目图片1" alt="项目1的截图">
-                    <div class="portfolio-item-content">
-                        <h3>项目名称 1</h3>
-                        <p>这里是项目的简短描述。说明了这个项目是做什么的，你使用了什么技术。</p>
-                        <a href="[指向你项目的链接，例如GitHub]" target="_blank">查看项目 &rarr;</a>
-                    </div>
+                <div class="chat-bubble left">
+                    <span class="chat-meta">Recruiter A - 2023.09</span>
+                    Hey Wenhao! 听说你在 **某某科技公司** 担任前端开发？做得怎么样？
                 </div>
 
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/300x200?text=项目图片2" alt="项目2的截图">
-                    <div class="portfolio-item-content">
-                        <h3>项目名称 2</h3>
-                        <p>这里是项目的简短描述。说明了这个项目是做什么的，你使用了什么技术。</p>
-                        <a href="#" target="_blank">查看项目 &rarr;</a>
-                    </div>
+                <div class="chat-bubble right">
+                    <span class="chat-meta">Me</span>
+                    是的！我主导了公司官网的重构，用了最新的 React 框架，性能提升了 40%！✨
                 </div>
 
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/300x200?text=项目图片3" alt="项目3的截图">
-                    <div class="portfolio-item-content">
-                        <h3>项目名称 3</h3>
-                        <p>这里是项目的简短描述。说明了这个项目是做什么的，你使用了什么技术。</p>
-                        <a href="#" target="_blank">查看项目 &rarr;</a>
-                    </div>
+                <div class="chat-bubble left">
+                    <span class="chat-meta">Design Studio - 2022.06</span>
+                    我们看了你在 **创意工作室** 的 UI 实习作品，那个 3D 交互很酷。
+                </div>
+
+                <div class="chat-bubble right">
+                    <span class="chat-meta">Me</span>
+                    谢谢！那是我用 Three.js 写的。我对 WebGL 很感兴趣。🎨
+                </div>
+
+                <div style="text-align:center; color:#ccc; font-size:0.8rem;">
+                    ----- Today -----
                 </div>
 
             </div>
-        </section>
+        </div>
 
-        <section id="blog">
-            <h2>文章与随想</h2>
-            
-            <div class="blog-post">
-                <a href="#"> 
-                    <p class="date">2025年10月28日</p>
-                    <h3>文章标题 1：我的第一个随想</h3>
-                    <p>这里是文章的摘要或开头几句话。点击标题可以阅读更多（如果设置了单独页面的话）。</p>
-                </a>
+        <div class="win-player window">
+            <div class="window-header">
+                WINAMP_PLAYER.EXE
+                <div class="window-controls"><span></span><span></span></div>
             </div>
+            <div class="window-content">
+                <div class="track-info">
+                    NOW PLAYING: <br>
+                    <span style="color:var(--nj-blue)">Cai Wenhao's Skills.mp3</span>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
 
-            <div class="blog-post">
-                <a href="#">
-                    <p class="date">2025年10月20日</p>
-                    <h3>文章标题 2：关于 [某个技术] 的思考</h3>
-                    <p>这是第二篇文章的摘要。随着你写的文章增多，可以不断复制这个 'blog-post' 模块。</p>
-                </a>
+                <div class="skill-list">
+                    <div class="skill-pill">HTML5/CSS3</div>
+                    <div class="skill-pill">JavaScript</div>
+                    <div class="skill-pill">Vue.js</div>
+                    <div class="skill-pill">React</div>
+                    <div class="skill-pill">Motion Design</div>
+                    <div class="skill-pill">Figma</div>
+                    <div class="skill-pill">Video Editing</div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; margin-top:15px; font-size:1.5rem;">
+                    <span>⏮</span>
+                    <span>▶️</span>
+                    <span>⏭</span>
+                </div>
             </div>
-
-        </section>
+        </div>
 
     </div>
 
-    <footer>
-        <p>
-            &copy; 2025 [你的名字]。
-            <br>
-            可以通过 [你的邮箱地址] 联系我。
-        </p>
-    </footer>
+    <div class="taskbar">
+        <div class="start-btn">START</div>
+        <div class="marquee-container">
+            <marquee scrollamount="5" scrolldelay="100">
+                *** WELCOME TO WENHAO'S WORLD *** LOOKING FOR A FRONTEND DEVELOPER? *** CHOOSE YOUR FIGHTER *** LET'S CREATE SOMETHING COOL *** </marquee>
+        </div>
+        <div style="font-family:'VT323'; font-size:1.2rem;">PM 4:20</div>
+    </div>
 
+    <script>
+        // 简单的交互：点击窗口置顶
+        const windows = document.querySelectorAll('.window');
+        let zIndex = 100;
+
+        windows.forEach(win => {
+            win.addEventListener('mousedown', () => {
+                zIndex++;
+                win.style.zIndex = zIndex;
+            });
+            
+            // 移动端简单的触摸反馈
+            win.addEventListener('touchstart', () => {
+                zIndex++;
+                win.style.zIndex = zIndex;
+            });
+        });
+
+        // 动态时间更新
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            document.querySelector('.taskbar div:last-child').innerText = timeString;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        console.log("🐰 NewJeans vibes loaded successfully!");
+    </script>
 </body>
 </html>
